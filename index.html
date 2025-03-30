@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <style>
+        .Completed {
+            text-decoration: line-through;
+            color: gray;
+        }
+        .deletebtn {
+            margin-left: 10px;
+            cursor: pointer;
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 5px;
+            border-radius: 5px;
+        }
+        .input{
+            border-style:solid;
+            border-color: black;
+            padding: 10px;
+            margin: auto;
+            width:fit-content;
+            border-radius: 10px;
+
+        }
+        #taskinput:hover{
+            background-color: rgba(126, 135, 136, 0.2);
+        }
+        li{
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>To-Do List</h1>
+        <div class="input">
+            <input type="text" id="taskinput" placeholder="Enter a task">
+            <button id="addTaskBtn">Add Task</button>
+        </div>
+        <ul id="tasklist"></ul>
+    </div>
+    
+    <script>
+        document.getElementById("addTaskBtn").addEventListener("click", addTask);
+
+        document.getElementById("taskinput").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                addTask();
+            }
+        });
+
+        function addTask() {
+            let taskInput = document.getElementById("taskinput");
+            let taskText = taskInput.value.trim(); 
+
+            if (taskText === "") {
+                alert("Please enter a task!");
+                return;
+            }
+
+            let listItem = document.createElement("li");
+
+            let taskSpan = document.createElement("span");
+            taskSpan.textContent = taskText;
+            taskSpan.onclick = function() {
+                this.classList.toggle("Completed");
+            };
+
+            let delButton = document.createElement("button");
+            delButton.textContent = "Delete";
+            delButton.className = "deletebtn";
+            delButton.onclick = function() {
+                this.parentElement.remove();
+            };
+
+            listItem.appendChild(taskSpan);
+            listItem.appendChild(delButton);
+            document.getElementById("tasklist").appendChild(listItem);
+
+            taskInput.value = "";
+        }
+    </script>
+</body>
+</html>
